@@ -1,0 +1,291 @@
+</html>
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" th:href="@{/bootstrap-4/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.css}">
+	<link href="/fontawesome/css/brands.css" rel="stylesheet" />
+	<link href="/fontawesome/css/solid.css" rel="stylesheet" />
+	<link href="/fontawesome/css/sharp-thin.css" rel="stylesheet" />
+	<link href="/fontawesome/css/duotone-thin.css" rel="stylesheet" />
+	<link href="/fontawesome/css/sharp-duotone-thin.css" rel="stylesheet" />
+	
+
+	<title>Hello, world!</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Dropdown
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">Disabled</a>
+				</li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<!-- Main content (10 columns) -->
+			<main class="col-12 p-4">
+				<h5>Import dữ liệu Work Order!</h5>
+				<form th:action="@{/workorder/import}" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="exampleFormControlFile1">File dữ nhập dữ liệu Work Order</label>
+						<input type="file" name="file" accept=".xls,.xlsx" required class="form-control-file"
+							id="exampleFormControlFile1">
+					</div>
+					<button type="submit">Import</button>
+				</form>
+				<p th:text="${message}"></p>
+				<p th:text="${error}"></p>
+
+				<!-- ---------------------------------------------------------------- -->
+				<hr class="mt-5">
+				<h5>Nhập thủ công hoặc sửa dữ liệu</h5>
+				<form class="needs-validation" th:action="@{/workorder/save}" th:object="${workOrder}" method="post">
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">WO Number</span>
+								</div>
+								<input type="text" id="woNumber" th:field="*{woNumber}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Issue Date</span>
+								</div>
+								<input type="text" id="issueDate"
+								       th:value="${#dates.format(workOrder.issueDate, 'dd/MM/yyyy')}"
+								       name="issueDate"
+								       class="form-control" required />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Setup Date</span>
+								</div>
+								<input type="text" id="setupDate"
+								       th:value="${#dates.format(workOrder.setupDate, 'dd/MM/yyyy')}"
+								       name="setupDate"
+								       class="form-control" required />
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Model name</span>
+								</div>
+								<input type="text" id="fgNumber" th:field="*{fgNumber}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Old Model</span>
+								</div>
+								<input type="text" id="oldFglNumber" th:field="*{oldFglNumber}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">LineNo</span>
+								</div>
+								<input type="text" id="lineNo" th:field="*{lineNo}" class="form-control" />
+							</div>
+						</div>
+					</div>
+
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Spindles</span>
+								</div>
+								<input type="text" id="numberOfSpindle" th:field="*{numberOfSpindle}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Operators</span>
+								</div>
+								<input type="text" id="numberOfOperator" th:field="*{numberOfOperator}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Ngày SX</span>
+								</div>
+								
+								<input type="text" id="prductionStartDate"
+									th:value="${#dates.format(workOrder.prductionStartDate, 'dd/MM/yyyy')}"
+									name="prductionStartDate"
+									class="form-control"/>
+																	   
+							</div>
+						</div>
+					</div>
+
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Ngày kết thúc</span>
+								</div>
+								<input type="text" id="prductionEndDate"
+																	th:value="${#dates.format(workOrder.prductionEndDate, 'dd/MM/yyyy')}"
+																	name="prductionEndDate"
+																	class="form-control"/>
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Ca bắt đầu</span>
+								</div>
+								<input type="text" id="prductionStartShift" th:field="*{prductionStartShift}" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend">Ca kết thúc</span>
+								</div>
+								<input type="text" id="prductionEndShift" th:field="*{prductionEndShift}" class="form-control" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<input type="text" id="fgCode" th:field="*{fgCode}" class="form-control" placeholder="No code" />
+						</div>
+						<div class="col-md-8 mb-3">
+				
+							<input type="text" id="remark" th:field="*{remark}" class="form-control" placeholder="Chi chú" />
+						</div>
+					</div>
+					<button class="btn btn-secondary float-right" type="submit"> Save </button>
+				</form>
+				<!-- ---------------------------------------------------------------- -->
+
+				<h5 class="mt-5"> Hiển thị dữ liệu! </h5>
+				<table class="table table-hover table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">WO Number</th>
+							<th scope="col">Issue Date</th>
+							<th scope="col">Setup date</th>
+							<th scope="col">Model Name</th>
+							<th scope="col">Old Model</th>
+							<th scope="col">No Code</th>
+							<th scope="col">LineNo</th>
+							<th scope="col">Spindles</th>
+							<th scope="col">Operators</th>
+							<th scope="col">Ngày SX</th>
+							<th scope="col">Ngày kết thúc</th>
+							<th scope="col">Start shift</th>
+							<th scope="col">End shift</th>
+							<th scope="col">Ghi chú</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item, iterStat : ${woorderlist}">
+							<th th:text="${iterStat.index + 1}">1</th>
+							<td th:text="${item.woNumber}"></td>
+							<td th:text="${#dates.format(item.issueDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${#dates.format(item.setupDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${item.fgNumber}"></td>
+							<td th:text="${item.oldFglNumber}"></td>
+							<td th:text="${item.fgCode}"></td>
+							<td th:text="${item.lineNo}"></td>
+							<td th:text="${item.numberOfSpindle}"></td>
+							<td th:text="${item.numberOfOperator}"></td>
+							<td th:text="${#dates.format(item.prductionStartDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${#dates.format(item.prductionEndDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${item.prductionStartShift}"></td>
+							<td th:text="${item.prductionEndShift}"></td>
+							<td th:text="${item.remark}"></td>
+							<td>
+								<a th:href="@{/workorder/edit(wo_id=${item.woNumber})}">
+								    <i class="fas fa-edit text-secondary"></i>
+								</a>
+								<a th:href="@{/workorder/del(wo_id=${item.woNumber})}">
+								    <i class="fas fa-trash text-danger"></i>
+								</a>
+								<a th:href="@{/workorder/detail(wo_id=${item.woNumber})}">
+								   <i class="fa-solid fa-user-check text-secondary"></i>
+								</a>
+							</td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</main>
+
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/bootstrap-4/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
