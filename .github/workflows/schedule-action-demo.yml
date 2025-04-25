@@ -1,13 +1,16 @@
-name: Schedule an action demonstration
-run-name: On Schedule GitHub Actions testing 🚀
+name: Schedule Every Minute Demo
 
 on:
   schedule:
-    - cron: '1 * * * *'
+    - cron: '* * * * *'     # Chạy mỗi phút
+  workflow_dispatch:         # Cho phép chạy thủ công
 
 jobs:
-  explore-schedule-github-actions:
+  demo-schedule:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo scheduled message
-        run: echo "🎉 The job was automatically triggered after 5 minutes"
+      - name: Display current time
+        run: echo "⏰ Job ran at $(date)"
+
+      - name: Custom message
+        run: echo "🚀 This job runs every minute or on manual dispatch!"
