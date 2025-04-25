@@ -1,0 +1,88 @@
+<!-- fragments/data-table.html -->
+<style>
+	.table-responsive {
+	  display: block;
+	  width: 100%;
+	  overflow-x: auto;  /* Cho phép cuộn ngang */
+	  -webkit-overflow-scrolling: touch;  /* Trải nghiệm mượt mà trên thiết bị di động */
+	}
+
+	table {
+	  width: 100%; /* Đảm bảo bảng không bị thu nhỏ */
+	  table-layout: fixed; /* Đảm bảo các cột không bị thu nhỏ */
+	}
+
+	th, td {
+	  white-space: nowrap; /* Ngăn không cho nội dung cột bị xuống dòng */
+	}	
+</style>
+<div th:fragment="dataTable(woorderlist)">
+  <h5 class="mt-5">Hiển thị dữ liệu!</h5>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">WO Number</th>
+          <th scope="col">Issue Date</th>
+          <th scope="col">Setup date</th>
+          <th scope="col">Model Name</th>
+          <th scope="col">Old Model</th>
+          <th scope="col">No Code</th>
+          <th scope="col">LineNo</th>
+          <th scope="col">Spindles</th>
+          <th scope="col">Operators</th>
+          <th scope="col">Ngày SX</th>
+          <th scope="col">Ngày kết thúc</th>
+          <th scope="col">Start shift</th>
+          <th scope="col">End shift</th>
+          <th scope="col">Ghi chú</th>
+          <th scope="col">Sale check</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item, iterStat : ${woorderlist}">
+          <th th:text="${iterStat.index + 1}">1</th>
+          <td th:text="${item.woNumber}"></td>
+          <td th:text="${#dates.format(item.issueDate, 'dd-MM-yyyy')}"></td>
+          <td th:text="${#dates.format(item.setupDate, 'dd-MM-yyyy')}"></td>
+          <td th:text="${item.fgNumber}"></td>
+          <td th:text="${item.oldFglNumber}"></td>
+          <td th:text="${item.noCode}"></td>
+          <td th:text="${item.lineNo}"></td>
+          <td th:text="${item.numberOfSpindle}"></td>
+          <td th:text="${item.numberOfOperator}"></td>
+          <td th:text="${#dates.format(item.productionStartDate, 'dd-MM-yyyy')}"></td>
+          <td th:text="${#dates.format(item.productionEndDate, 'dd-MM-yyyy')}"></td>
+          <td th:text="${item.productionStartShift}"></td>
+          <td th:text="${item.productionEndShift}"></td>
+          <td th:text="${item.remark}"></td>
+
+          <td class="text-center">
+            <!-- Nếu chưa check -->
+            <a th:if="${item.categoryCheckStatus}" th:href="@{/workorder/salecheck(wo_id=${item.woNumber})}"
+              title="Cần kiểm tra">
+              <i class="fa-solid fa-circle-exclamation text-danger"></i>
+            </a>
+
+            <!-- Nếu đã check -->
+            <a th:if="${!item.categoryCheckStatus}" title="Đã kiểm tra">
+              <i class="fa-solid fa-circle-check text-success"></i>
+            </a>
+          </td>
+
+          <td class="text-center">
+            <a th:href="@{/workorder/edit(wo_id=${item.woNumber})}">
+              <i class="fas fa-edit text-secondary"></i>
+            </a>
+            <a th:href="@{/workorder/del(wo_id=${item.woNumber})}" onclick="return confirmDelete()">
+              <i class="fas fa-trash text-danger"></i>
+            </a>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

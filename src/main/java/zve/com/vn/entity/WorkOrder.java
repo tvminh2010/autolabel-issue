@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,19 +31,26 @@ public class WorkOrder {
 
 	@Id
 	String woNumber;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date issueDate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date setupDate;
-	String fgCode;
+	String noCode;
 	String fgNumber;
 	String oldFglNumber;
 	String lineNo;
 	String bobbinNumber;
 	
-	Date prductionStartDate;
-	Date prductionEndDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date productionStartDate;
 	
-	String prductionStartShift;
-	String prductionEndShift;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date productionEndDate;
+	
+	String productionStartShift;
+	String productionEndShift;
 	
 	Integer productionQty;
 	Integer wipQty;
@@ -60,4 +69,15 @@ public class WorkOrder {
 	
 	@OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<WorkOrderItem> items = new HashSet<>();
+	
+	/* ------------------------------------------------------------ */
+	public boolean getCategoryCheckStatus() {
+	    for (WorkOrderItem item : items) {
+	        if ("PI".equalsIgnoreCase(item.getCategory())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	/* ------------------------------------------------------------ */
 }

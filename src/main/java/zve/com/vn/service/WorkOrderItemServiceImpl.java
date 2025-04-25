@@ -1,6 +1,7 @@
 package zve.com.vn.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,11 @@ public class WorkOrderItemServiceImpl implements WorkOrderItemService {
 		return repository.findAll();
 	}
 	/* ---------------------------------------------------- */
+
+	@Override
+	public Optional<WorkOrderItem> findBySoNumber(String soNumber) {
+		return repository.findBySoNumber(soNumber);
+	}
+
+
 }

@@ -9,4 +9,5 @@ public interface WorkOrderService {
 	WorkOrder save(WorkOrder workOrder);
 	List<WorkOrder> findAll();
 	Optional<WorkOrder> findByWoNumber(String woNumber);
+	void delete(WorkOrder workOrder);
 }

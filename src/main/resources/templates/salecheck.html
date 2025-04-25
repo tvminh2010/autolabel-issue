@@ -1,0 +1,124 @@
+</html>
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" th:href="@{/bootstrap-4/css/bootstrap.min.css}">
+	<link href="/fontawesome/css/all.min.css" rel="stylesheet" />
+
+
+	<title>Hello, world!</title>
+</head>
+
+<body>
+	<div th:replace="~{fragments/navigation-header :: navigationHeader}"></div>
+
+
+	<div class="container-fluid">
+		<div class="row">
+			<main class="col-12 p-4">
+				<h5>Sale kiểm tra và xác nhận dữ liệu PI</h5>
+					<form class="needs-validation" th:action="@{/workorder/salecheck/edit}" th:object="${workOrderItem}" method="post">
+						<div class="form-row">
+							<div class="col-12 col-sm-6 col-md-4 mb-3">
+								
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroupPrepend">WO Number</span>
+									</div>
+									<input type="text" id="soNumber" th:field="*{soNumber}" class="form-control" />
+								</div>
+							</div>
+
+							<div class="col-12 col-sm-6 col-md-4 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroupPrepend">SO Number</span>
+									</div>
+									<input type="text" id="soNumber" th:field="*{soNumber}" name="soNumber" class="form-control" />
+								</div>
+							</div>
+
+							<div class="col-12 col-sm-6 col-md-4 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroupPrepend">Sale Order Qty</span>
+									</div>
+									<input type="text" id="saleOderQty" th:field="*{saleOderQty}" name="saleOderQty" class="form-control" />
+								</div>
+							</div>
+						</div>
+						
+						<!-- Hàng mới chứa checkbox -->
+						<div class="form-row">
+						    <div class="col-12 col-sm-6 col-md-4 mb-3">
+						        <div class="form-check text-right">
+						            <input class="form-check-input" type="checkbox" id="confirmedCheckbox" />
+						            <label class="form-check-label" for="confirmedCheckbox">
+						                Confirmed
+						            </label>
+						        </div>
+						    </div>
+						</div>
+						
+						<button class="mb-2 btn btn-primary float-right" type="submit">Save</button>
+
+					</form>
+				<!-- ---------------------------------------------------------------------------------------------- -->
+				<h5 class="mt-5">WorkOrder Items <!-- <span class="ml-3 text-bold" th:text="${workOrder.woNumber}"></span> --> </h5>
+				 <div class="table-responsive">
+				   <table class="table table-hover table-bordered">
+				     <thead>
+				       <tr>
+				         <th scope="col">#</th>
+						 <th scope="col">WO Number</th>
+				         <th scope="col">SO Number</th>
+				         <th scope="col">Sale Order Qty</th>
+				         <th scope="col">Due date</th>
+				         <th scope="col">Customer</th>
+				         <th scope="col">Category</th>
+				         <th scope="col">Action</th>
+				       </tr>
+				     </thead>
+				     <tbody>
+				       <tr th:each="item, iterStat : ${workOrderItemLists}">
+				         <th th:text="${iterStat.index + 1}">1</th>
+						 <td th:text="${workOrder.woNumber}"></td>
+				         <td th:text="${item.soNumber}"></td>
+				         <td th:text="${item.saleOderQty}"></td>
+				         <td th:text="${item.dueDate}"></td>
+				         <td th:text="${item.customerName}"></td>
+						 <td th:text="${item.category}" class="text-center"
+						     th:classappend="${item.category == 'PI'} ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'">
+						 </td>
+						 <td class="text-center">
+						   <a th:if="${item.category == 'PI'}" 
+						   	 th:href="@{/workorder/salecheck(wo_id=${workOrder.woNumber}, so_no=${item.soNumber})}">
+						     <i class="fas fa-edit text-secondary"></i>
+						   </a>
+						 </td>
+				       </tr>
+				     </tbody>
+				   </table>
+				 </div>
+			</main>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/bootstrap-4/js/bootstrap.bundle.min.js}"></script>
+	
+	<script type="text/javascript">
+	    function confirmDelete() {
+	        return confirm("Bạn có chắc chắn muốn xóa Sale order này không?");
+	    }
+	</script>
+</body>
+
+</html>

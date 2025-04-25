@@ -32,4 +32,9 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		 return repository.findByWoNumber(woNumber);
 	}
 	/* ---------------------------------------------------- */
+	@Override
+	public void delete(WorkOrder workOrder) {
+		repository.delete(workOrder);
+	}
+	/* ---------------------------------------------------- */
 }

@@ -1,6 +1,7 @@
 package zve.com.vn.service;
 
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,10 +65,10 @@ public class ExcelWorkOrderImporter {
 	                    .numberOfOperator(parseInt(row.getCell(8)))
 	                    .wipQty(parseInt(row.getCell(9)))
 	                    .productionQty(parseInt(row.getCell(10)))
-	                    .prductionStartDate(parseDate(row.getCell(11)))
-	                    .prductionStartShift(getCellValue(row.getCell(12)))
-	                    .prductionEndDate(parseDate(row.getCell(13)))
-	                    .prductionEndShift(getCellValue(row.getCell(14)))
+	                    .productionStartDate(parseDate(row.getCell(11)))
+	                    .productionStartShift(getCellValue(row.getCell(12)))
+	                    .productionEndDate(parseDate(row.getCell(13)))
+	                    .productionEndShift(getCellValue(row.getCell(14)))
 	                    .remark(getCellValue(row.getCell(15)))
 	                    .woStatus("created")
 	                    .createAt(new Date())

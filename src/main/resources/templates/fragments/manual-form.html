@@ -1,0 +1,141 @@
+<!-- fragments/manual-form.html -->
+<div th:fragment="manualForm">
+	<h5>Nhập thủ công hoặc sửa dữ liệu</h5>
+	<form class="needs-validation" th:action="@{/workorder/save}" th:object="${workOrder}" method="post">
+		<div class="form-row">
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">WO Number</span>
+					</div>
+					<input type="text" id="woNumber" th:field="*{woNumber}" class="form-control" readonly />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Issue Date</span>
+					</div>
+					<input type="date" id="issueDate" th:value="${#dates.format(workOrder.issueDate, 'yyyy-MM-dd')}"
+						name="issueDate" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Setup Date</span>
+					</div>
+					<input type="date" id="setupDate" th:value="${#dates.format(workOrder.setupDate, 'yyyy-MM-dd')}"
+						name="setupDate" class="form-control" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Model name</span>
+					</div>
+					<input type="text" id="fgNumber" th:field="*{fgNumber}" class="form-control" readonly />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Old Model</span>
+					</div>
+					<input type="text" id="oldFglNumber" th:field="*{oldFglNumber}" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">LineNo</span>
+					</div>
+					<input type="text" id="lineNo" th:field="*{lineNo}" class="form-control" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Spindles</span>
+					</div>
+					<input type="text" id="numberOfSpindle" th:field="*{numberOfSpindle}" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Operators</span>
+					</div>
+					<input type="text" id="numberOfOperator" th:field="*{numberOfOperator}" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Ngày SX</span>
+					</div>
+
+					<input type="date" id="productionStartDate"
+						th:value="${#dates.format(workOrder.productionStartDate, 'yyyy-MM-dd')}"
+						name="productionStartDate" class="form-control" />
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Ngày kết thúc</span>
+					</div>
+					<input type="date" id="productionEndDate"
+						th:value="${#dates.format(workOrder.productionEndDate, 'yyyy-MM-dd')}" name="productionEndDate"
+						class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Ca bắt đầu</span>
+					</div>
+					<input type="text" id="productionStartShift" th:field="*{productionStartShift}"
+						class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupPrepend">Ca kết thúc</span>
+					</div>
+					<input type="text" id="productionEndShift" th:field="*{productionEndShift}" class="form-control" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col-12 col-sm-6 col-md-4 mb-3">
+				<input type="text" id="noCode" th:field="*{noCode}" class="form-control" placeholder="No code" />
+			</div>
+			<div class="col-12 col-sm-6 col-md-8 mb-3">
+				<input type="text" id="remark" th:field="*{remark}" class="form-control" placeholder="Chi chú" />
+			</div>
+		</div>
+		<button class="mb-2 btn btn-primary float-right" type="submit">Save</button>
+
+	</form>
+</div>
