@@ -1,0 +1,16 @@
+name: Schedule Every Minute Demo
+
+on:
+  schedule:
+    - cron: '* * * * *'     # Chạy mỗi phút
+  workflow_dispatch:         # Cho phép chạy thủ công
+
+jobs:
+  demo-schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display current time
+        run: echo "⏰ Job ran at $(date)"
+
+      - name: Custom message
+        run: echo "🚀 This job runs every minute or on manual dispatch!"
