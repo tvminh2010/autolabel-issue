@@ -1,1 +1,10 @@
-
+name: Schedule an action demonstration
+run-name: On Schedule GitHub Actions testing 🚀
+on: 
+  schedule:
+    - cron: '1 * * * *'
+jobs:
+  Explore-Schedule-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically trigger after 5 minutes"
