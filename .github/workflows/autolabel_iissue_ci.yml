@@ -9,7 +9,6 @@ on:
       - master  # Thay thế 'main' nếu cần
 
 jobs:
-  Auto-Label-Issue-Actions:
   build:
     runs-on: ubuntu-latest
     
@@ -44,5 +43,5 @@ jobs:
       run: mvn test
       
     # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
-      - name: Package application
-        run: mvn package
+     - name: Package application
+      run: mvn package
