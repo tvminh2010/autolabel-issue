@@ -2,7 +2,7 @@ name: Schedule Every Minute Demo
 
 on:
   schedule:
-    - cron: '* * * * *'     # Chạy mỗi phút
+    - cron: '15 * * * *'     # Chạy mỗi phút
   workflow_dispatch:         # Cho phép chạy thủ công
 
 jobs:
