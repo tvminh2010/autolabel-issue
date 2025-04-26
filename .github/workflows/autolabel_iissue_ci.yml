@@ -43,5 +43,5 @@ jobs:
       run: mvn test
       
     # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
-     - name: Package application
+    - name: Package application
       run: mvn package
