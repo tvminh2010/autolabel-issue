@@ -42,13 +42,22 @@ jobs:
     # Bước 3: Cài đặt dependencies và build dự án bằng Maven
     - name: Build with Maven (CI profile)
       run: mvn clean install -Dspring.profiles.active=ci -DskipTests
+    
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..30}; do
+          if mysqladmin ping -hmysql -uroot -pVietnamnet.vn --silent; then
+            echo "MySQL is ready!"
+            break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
 
     # Bước 4: Chạy các bài test (nếu có)
-    #- name: Run tests
-    #  run: mvn test
+    - name: Run tests
+      run: mvn test
       
     # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
-    #- name: Package application
-    #  run: mvn package
-
-
+    - name: Package application
+      run: mvn package
