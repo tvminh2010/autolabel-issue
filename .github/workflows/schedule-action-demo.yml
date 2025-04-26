@@ -1,4 +1,5 @@
 name: Schedule Every Minute Demo
+run-name: Run name schedule Every Minute Demo go here
 on:
   schedule:
     - cron: '* * * * *'      # Chạy mỗi phút
