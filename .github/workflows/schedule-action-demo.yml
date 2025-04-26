@@ -1,10 +1,8 @@
 name: Schedule Every Minute Demo
-
 on:
   schedule:
-    - cron: '15 * * * *'     # Chạy mỗi phút
+    - cron: '* * * * *'      # Chạy mỗi phút
   workflow_dispatch:         # Cho phép chạy thủ công
-
 jobs:
   demo-schedule:
     runs-on: ubuntu-latest
