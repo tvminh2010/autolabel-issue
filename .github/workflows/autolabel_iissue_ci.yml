@@ -40,13 +40,15 @@ jobs:
         distribution: 'temurin'  # Chọn JDK distribution phù hợp với JDK 21
 
     # Bước 3: Cài đặt dependencies và build dự án bằng Maven
-    - name: Build with Maven
-      run: mvn clean install -DskipTests
+    - name: Build with Maven (CI profile)
+      run: mvn clean install -Dspring.profiles.active=ci -DskipTests
 
     # Bước 4: Chạy các bài test (nếu có)
-    #- name: Run tests
-    #  run: mvn test
+    - name: Run tests
+      run: mvn test
       
     # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
     - name: Package application
       run: mvn package
+
+
