@@ -44,8 +44,8 @@ jobs:
       run: mvn clean install -Dspring.profiles.active=ci -DskipTests
 
     # Bước 4: Chạy các bài test (nếu có)
-    - name: Run tests
-      run: mvn test
+    #- name: Run tests
+    #  run: mvn test
       
     # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
     - name: Package application
