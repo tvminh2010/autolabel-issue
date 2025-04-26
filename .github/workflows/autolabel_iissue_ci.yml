@@ -1,5 +1,5 @@
-name:       Spring Boot CI/CD
-run-name:   Spring Boot CI/CD run name 
+name: Spring Boot CI/CD
+run-name: Spring Boot CI/CD run name 
 on:
   push:
     branches:
@@ -9,6 +9,7 @@ on:
       - master  # Thay thế 'main' nếu cần
 
 jobs:
+  Auto-Label-Issue-Actions:
   build:
     runs-on: ubuntu-latest
     
