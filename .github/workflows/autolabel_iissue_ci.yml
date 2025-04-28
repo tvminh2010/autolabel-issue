@@ -1,18 +1,18 @@
 name: Spring Boot CI/CD
-run-name: Spring Boot CI/CD run name 
+run-name: Build & Test Spring Boot App
+
 on:
   push:
     branches:
-      - master  # Thay thế 'main' bằng tên nhánh của bạn nếu khác
+      - master  # hoặc 'main' nếu nhánh chính là main
   pull_request:
     branches:
-      - master  # Thay thế 'main' nếu cần
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    # Cài đặt dịch vụ mysql:latest docker
+
     services:
       mysql:
         image: mysql:latest
@@ -25,42 +25,33 @@ jobs:
           --health-cmd="mysqladmin ping --silent"
           --health-interval=5s
           --health-timeout=3s
-          --health-retries=3
-    
+          --health-retries=5
+
     steps:
-    # Bước 1: Checkout mã nguồn từ repository
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-    # Bước 2: Cài đặt Java JDK 21
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'  # Chọn JDK distribution phù hợp với JDK 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
-    # Bước 3: Cài đặt dependencies và build dự án bằng Maven
-    - name: Build with Maven (CI profile)
-      run: mvn clean install -Dspring.profiles.active=ci -DskipTests
-    
-    - name: Install MySQL client
-      run: sudo apt-get update && sudo apt-get install -y mysql-client
-        
-    - name: Wait for MySQL to be ready
-      run: |
-        for i in {1..30}; do
-          if mysqladmin ping -hmysql -uroot -pVietnamnet.vn --silent; then
-            echo "MySQL is ready!"
-            break
-          fi
-          echo "Waiting for MySQL..."
-          sleep 2
-        done
+      - name: Install MySQL client
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
 
-    # Bước 4: Chạy các bài test (nếu có)
-    - name: Run tests
-      run: mvn test -Dspring.profiles.active=ci
-      
-    # Bước 5: Đóng gói và chuẩn bị artifact (nếu cần)
-    - name: Package application
-      run: mvn package
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h mysql -u root -pVietnamnet.vn --silent; then
+              echo "✅ MySQL is ready!"
+              break
+            fi
+            echo "⏳ Waiting for MySQL..."
+            sleep 2
+          done
+
+      - name: Build and Test with Maven (using CI profile)
+        run: |
+          mvn clean install -Dspring.profiles.active=ci
+          mvn test -Dspring.profiles.active=ci
