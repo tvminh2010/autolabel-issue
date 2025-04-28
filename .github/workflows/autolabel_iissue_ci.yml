@@ -41,7 +41,7 @@ jobs:
 
     # Bước 3: Chờ MySQL service khởi động (sleep 30 giây)
     - name: Sleep for MySQL to be ready in 30 seconds
-      run: sleep 120
+      run: sleep 300
 
     # Bước 4: Build dự án (chạy clean install, skip test)
     - name: Build with Maven (CI profile)
