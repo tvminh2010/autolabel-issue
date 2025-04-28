@@ -1,13 +1,13 @@
 name: Spring Boot CI/CD
-run-name: Build & Test Spring Boot App
+run-name: Spring Boot CI/CD run
 
 on:
   push:
     branches:
-      - master  # hoặc 'main' nếu nhánh chính là main
+      - master   # Thay đổi nếu nhánh chính của cậu khác
   pull_request:
     branches:
-      - master
+      - master   # Thay đổi nếu nhánh chính của cậu khác
 
 jobs:
   build:
@@ -25,33 +25,32 @@ jobs:
           --health-cmd="mysqladmin ping --silent"
           --health-interval=5s
           --health-timeout=3s
-          --health-retries=5
+          --health-retries=3
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
+    # Bước 1: Lấy mã nguồn từ repository
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
+    # Bước 2: Cài đặt Java JDK 21
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
 
-      - name: Install MySQL client
-        run: sudo apt-get update && sudo apt-get install -y mysql-client
+    # Bước 3: Chờ MySQL service khởi động (sleep 30 giây)
+    - name: Sleep for MySQL to be ready in 30 seconds
+      run: sleep 30
 
-      - name: Wait for MySQL to be ready
-        run: |
-          for i in {1..30}; do
-            if mysqladmin ping -h mysql -u root -pVietnamnet.vn --silent; then
-              echo "✅ MySQL is ready!"
-              break
-            fi
-            echo "⏳ Waiting for MySQL..."
-            sleep 2
-          done
+    # Bước 4: Build dự án (chạy clean install, skip test)
+    - name: Build with Maven (CI profile)
+      run: mvn clean install -Dspring.profiles.active=ci -DskipTests
 
-      - name: Build and Test with Maven (using CI profile)
-        run: |
-          mvn clean install -Dspring.profiles.active=ci
-          mvn test -Dspring.profiles.active=ci
+    # Bước 5: Chạy test (nếu có)
+    - name: Run tests
+      run: mvn test -Dspring.profiles.active=ci
+
+    # Bước 6: Đóng gói project (mvn package)
+    - name: Package application
+      run: mvn package
