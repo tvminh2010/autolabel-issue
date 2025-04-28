@@ -71,13 +71,14 @@ jobs:
         
           # Thêm EC2 host key vào known_hosts để tránh lỗi Host key verification failures
           mkdir -p ~/.ssh
-          ssh-keyscan -H 54.254.37.210 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 54.151.131.114 >> ~/.ssh/known_hosts
         
           # Kết nối với EC2 và deploy file .jar
-          scp -i private_key.pem target/*.jar ec2-user@54.254.37.210:/home/ec2-user/app.jar
+          scp -i private_key.pem target/*.jar ec2-user@54.151.131.114:/home/ec2-user/app.jar
         
           # SSH vào EC2 và khởi động ứng dụng
-          ssh -i private_key.pem ec2-user@54.254.37.210 << 'EOF'
+          ssh -i private_key.pem ec2-user@54.151.131.114 << 'EOF'
             cd /home/ec2-user
-            java -jar app.jar
+            #java -jar app.jar
+            java -Dspring.profiles.active=ci -jar app.jar
           EOF
