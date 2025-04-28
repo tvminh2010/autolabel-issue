@@ -1,5 +1,5 @@
 name: Spring Boot CI/CD
-run-name: Build and Test Spring Boot Application, then deploy on aws ec2
+run-name: Build and Test Spring Boot Application, then deploy on aws ec2 (Success)
 
 on:
   push:
