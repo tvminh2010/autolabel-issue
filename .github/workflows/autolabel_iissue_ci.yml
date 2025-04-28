@@ -52,8 +52,8 @@ jobs:
         run: mvn package -Dspring.profiles.active=ci -DskipTests
 
       # (Optional) Bước 6: Upload Artifact nếu muốn
-      # - name: Upload JAR Artifact
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: spring-boot-app
-      #     path: target/*.jar
+      - name: Upload JAR Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: spring-boot-app
+          path: target/*.jar
