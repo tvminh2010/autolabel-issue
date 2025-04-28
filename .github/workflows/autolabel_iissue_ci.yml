@@ -74,10 +74,10 @@ jobs:
           ssh-keyscan -H 54.254.37.210 >> ~/.ssh/known_hosts
         
           # Kết nối với EC2 và deploy file .jar
-          scp -i private_key.pem target/*.jar ubuntu@54.254.37.210:/home/ubuntu/app.jar
+          scp -i private_key.pem target/*.jar ec2-user@54.254.37.210:/home/ubuntu/app.jar
         
           # SSH vào EC2 và khởi động ứng dụng
-          ssh -i private_key.pem ubuntu@54.254.37.210 << 'EOF'
+          ssh -i private_key.pem ec2-user@54.254.37.210 << 'EOF'
             cd /home
             java -jar app.jar
           EOF
