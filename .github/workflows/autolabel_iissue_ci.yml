@@ -55,7 +55,7 @@ jobs:
       - name: List files in target directory
         run: ls -l target/
 
-      # Bước 6: Upload Artifact
+      # Bước 6: Upload Artifact - new
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
