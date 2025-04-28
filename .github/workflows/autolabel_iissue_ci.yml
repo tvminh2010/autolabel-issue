@@ -57,7 +57,7 @@ jobs:
 
       # Bước 6: Upload Artifact
       - name: Upload JAR Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: spring-boot-app
           path: target/*.jar
