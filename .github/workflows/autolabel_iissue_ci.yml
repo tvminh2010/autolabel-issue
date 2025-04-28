@@ -62,7 +62,7 @@ jobs:
           name: spring-boot-app
           path: target/*.jar
           
-      # Bước 7: Deploy lên AWS EC2
+      # Bước 7: Deploy lên AWS EC22
       - name: Deploy to AWS EC2
         run: |
           # Thiết lập môi trường SSH
