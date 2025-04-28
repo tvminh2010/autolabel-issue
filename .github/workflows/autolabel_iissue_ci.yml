@@ -1,5 +1,5 @@
 name: Spring Boot CI/CD
-run-name: Build and Test Spring Boot Application
+run-name: Build and Test Spring Boot Application, then deploy on aws ec2
 
 on:
   push:
@@ -78,6 +78,6 @@ jobs:
         
           # SSH vào EC2 và khởi động ứng dụng
           ssh -i private_key.pem ec2-user@54.254.37.210 << 'EOF'
-            cd /home
+            cd /home/ec2-user
             java -jar app.jar
           EOF
