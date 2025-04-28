@@ -61,3 +61,19 @@ jobs:
         with:
           name: spring-boot-app
           path: target/*.jar
+          
+      # Bước 7: Deploy lên AWS EC2
+      - name: Deploy to AWS EC2
+        run: |
+          # Thiết lập môi trường SSH
+          echo "${{ secrets.AWS_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          
+          # Kết nối với EC2 và deploy file .jar
+          scp -i private_key.pem target/*.jar ubuntu@18.136.213.245:/home/ubuntu/app.jar
+          
+          # SSH vào EC2 và khởi động ứng dụng
+          ssh -i private_key.pem ubuntu@18.136.213.245 << 'EOF'
+            cd /home
+            java -jar app.jar
+          EOF
