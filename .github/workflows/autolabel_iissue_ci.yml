@@ -1,13 +1,13 @@
 name: Spring Boot CI/CD
-run-name: Spring Boot CI/CD run
+run-name: Build and Test Spring Boot Application
 
 on:
   push:
     branches:
-      - master   # Thay đổi nếu nhánh chính của cậu khác
+      - master
   pull_request:
     branches:
-      - master   # Thay đổi nếu nhánh chính của cậu khác
+      - master
 
 jobs:
   build:
@@ -24,33 +24,36 @@ jobs:
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=5s
-          --health-timeout=3s
-          --health-retries=3
+          --health-timeout=5s
+          --health-retries=10
 
     steps:
-    # Bước 1: Lấy mã nguồn từ repository
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # Bước 1: Checkout source code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # Bước 2: Cài đặt Java JDK 21
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
+      # Bước 2: Cài đặt JDK 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
-    # Bước 3: Chờ MySQL service khởi động (sleep 30 giây)
-    - name: Sleep for MySQL to be ready in 30 seconds
-      run: sleep 300
+      # Bước 3: Build dự án, không chạy test
+      - name: Build Project (Skip Tests)
+        run: mvn clean install -Dspring.profiles.active=ci -DskipTests
 
-    # Bước 4: Build dự án (chạy clean install, skip test)
-    - name: Build with Maven (CI profile)
-      run: mvn clean install -Dspring.profiles.active=ci -DskipTests
+      # Bước 4: Chạy Tests
+      - name: Run Tests
+        run: mvn test -Dspring.profiles.active=ci
 
-    # Bước 5: Chạy test (nếu có)
-    - name: Run tests
-      run: mvn test -Dspring.profiles.active=ci
+      # Bước 5: Package Application (Skip Tests)
+      - name: Package Application
+        run: mvn package -Dspring.profiles.active=ci -DskipTests
 
-    # Bước 6: Đóng gói project (mvn package)
-    - name: Package application
-      run: mvn package
+      # (Optional) Bước 6: Upload Artifact nếu muốn
+      # - name: Upload JAR Artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: spring-boot-app
+      #     path: target/*.jar
