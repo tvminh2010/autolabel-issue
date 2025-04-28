@@ -71,13 +71,13 @@ jobs:
         
           # Thêm EC2 host key vào known_hosts để tránh lỗi Host key verification failed
           mkdir -p ~/.ssh
-          ssh-keyscan -H 18.136.213.245 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 54.254.37.210 >> ~/.ssh/known_hosts
         
           # Kết nối với EC2 và deploy file .jar
-          scp -i private_key.pem target/*.jar ubuntu@18.136.213.245:/home/ubuntu/app.jar
+          scp -i private_key.pem target/*.jar ubuntu@54.254.37.210:/home/ubuntu/app.jar
         
           # SSH vào EC2 và khởi động ứng dụng
-          ssh -i private_key.pem ubuntu@18.136.213.245 << 'EOF'
+          ssh -i private_key.pem ubuntu@54.254.37.210 << 'EOF'
             cd /home
             java -jar app.jar
           EOF
