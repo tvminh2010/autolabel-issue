@@ -69,7 +69,7 @@ jobs:
           echo "${{ secrets.AWS_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
         
-          # Thêm EC2 host key vào known_hosts để tránh lỗi Host key verification failede
+          # Thêm EC2 host key vào known_hosts để tránh lỗi Host key verification faile
           mkdir -p ~/.ssh
           ssh-keyscan -H 54.254.37.210 >> ~/.ssh/known_hosts
         
